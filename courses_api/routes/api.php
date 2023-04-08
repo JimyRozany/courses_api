@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::middleware('checkApiPassword')->group(function(){
+/* -------------user routes ----------------- */
+    Route::prefix('user')->group(function(){
+        /* ---------- User Register ------------ */
+        Route::post('register' ,[UserController::class ,'userRegister']);
+        
+        /* ---------- User Login ------------ */
+        Route::post('login' ,[UserController::class ,'userLogin']);
+        
+        /* ---------- User Logout ------------ */
+        Route::post('logout' ,[UserController::class ,'userLogout'])->middleware('checkAuthAndToken:user-api');
+        
+        /* ---------- User Update ------------ */
+        Route::post('update' ,[UserController::class ,'userUpdate'])->middleware('checkAuthAndToken:user-api');
+        
+        /* ---------- User Delete Account ------------ */
+        Route::post('delete-account' ,[UserController::class ,'deleteAccount'])->middleware('checkAuthAndToken:user-api');
+    });
 });
+
+
+
+
+
+
+
+
+
