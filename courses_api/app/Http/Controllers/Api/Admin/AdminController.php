@@ -7,13 +7,10 @@ use App\Models\Admin;
 use App\Models\VideoInfo;
 use App\Models\CourseInfo;
 use Illuminate\Http\Request;
-use Dflydev\DotAccessData\Data;
 use App\Http\Traits\ResponseTrait;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use PHPUnit\Framework\Constraint\Count;
-use Symfony\Component\Console\Input\Input;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 
@@ -183,7 +180,14 @@ class AdminController extends Controller
                     'video_path' => $videoPath,
                     'video_duration' => $videoDuration,
                 ]);
+                // update course info 'number of videos'
+                $course = CourseInfo::find($request->input('course_id'));
+                $course->update([
+                    'number_of_videos' => $course->number_of_videos + 1
+                ]);
+                return $course->number_of_videos;
 
+    
             return $this->responseSuccess('video added successfuly' ,201);
         } catch (\Exception $ex) {
         return $this->responseError($ex->getMessage() ,500);
