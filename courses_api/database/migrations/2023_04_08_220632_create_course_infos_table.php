@@ -15,7 +15,16 @@ return new class extends Migration
     {
         Schema::create('course_infos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('admin_id');
+            $table->string('course_name');
+            $table->string('course_img_path');
+            $table->integer('number_of_videos');
             $table->timestamps();
+            
+            $table->foreign('admin_id')
+            ->references('id')
+            ->on('admins')
+            ->onDelete('cascade');
         });
     }
 
