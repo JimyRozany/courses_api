@@ -17,9 +17,20 @@ class CourseInfo extends Model
     ];
 
 
+
+
+
+
+    
+    /*  ================================= */
+
     public function admin()
     {
         return $this->belongsTo(Admin::class);
+    }
+    public function video()
+    {
+        return $this->hasMany(VideoInfo::class);
     }
 
 

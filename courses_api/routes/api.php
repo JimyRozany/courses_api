@@ -51,6 +51,10 @@ Route::middleware('checkApiPassword')->group(function(){
     /* ---------- Admin Logout ------------ */
     Route::post('logout' ,[AdminController::class ,'AdminLogout'])->middleware('checkAuthAndToken:admin-api');
     
+    Route::middleware('checkAuthAndToken:admin-api')->group(function(){
+        Route::post('create' ,[AdminController::class ,'createCourse']); // create new course
+        Route::post('add-videos' ,[AdminController::class ,'addVideos']); // add videos to course
+    });
 
     
     });
