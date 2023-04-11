@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\User\UserController;
-use App\Http\Controllers\Api\Admin\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\User\UserController;
+use App\Http\Controllers\Api\Admin\AdminController;
+use App\Http\Controllers\Api\Course\CourseController;
+use App\Models\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 
 Route::middleware('checkApiPassword')->group(function(){
@@ -51,14 +49,32 @@ Route::middleware('checkApiPassword')->group(function(){
     /* ---------- Admin Logout ------------ */
     Route::post('logout' ,[AdminController::class ,'AdminLogout'])->middleware('checkAuthAndToken:admin-api');
     
+    /* ============ Course Routes ============== */
     Route::middleware('checkAuthAndToken:admin-api')->group(function(){
-        Route::post('create' ,[AdminController::class ,'createCourse']); // create new course
-        Route::post('add-videos' ,[AdminController::class ,'addVideos']); // add videos to course
+        Route::post('create' ,[CourseController::class ,'createCourse']); // create new course
+        Route::post('edit-course' ,[CourseController::class ,'editCourse']); // edit course info
+        Route::post('remove-course' ,[CourseController::class ,'removeCourse']); // remove course
+        Route::post('add-videos' ,[CourseController::class ,'addVideos']); // add videos to course
+        Route::post('edit-video' ,[CourseController::class ,'editVideo']); // edit videos in course
+        Route::post('remove-video' ,[CourseController::class ,'removeVideo']); // remove videos in course
     });
 
     
     });
+
+    /* ------------- Auth Routes --------------- */
+    Route::middleware('checkToken')->group(function(){
+        Route::post('all-courses' ,[CourseController::class ,'allCourses']); // get all courses
+        Route::post('show' ,[CourseController::class ,'showCourse']); // get one course
+        Route::post('show-all-videos' ,[CourseController::class ,'allVideos']); // get all videos in course
+        Route::post('show-video' ,[CourseController::class ,'showVideo']); // get one video in course
+
+    });
+
+
 });
+
+
 
 
 

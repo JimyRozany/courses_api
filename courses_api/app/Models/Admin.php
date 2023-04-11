@@ -44,7 +44,7 @@ class Admin extends Authenticatable implements JWTSubject
 
     /*************************************************** */
     
-    public function course()
+    public function courses()
     {
         return $this->hasMany(CourseInfo::class);
     }

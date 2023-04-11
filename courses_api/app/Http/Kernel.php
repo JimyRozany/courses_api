@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         /* ------------------ */
         'checkApiPassword'=> \App\Http\Middleware\CheckApiPassword::class,
         'checkAuthAndToken'=> \App\Http\Middleware\CheckAuthAndToken::class,
+        'checkToken'=> \App\Http\Middleware\CheckToken::class,
     ];
 }

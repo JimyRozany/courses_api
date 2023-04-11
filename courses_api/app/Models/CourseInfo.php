@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\VideoInfo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CourseInfo extends Model
 {
@@ -28,9 +29,9 @@ class CourseInfo extends Model
     {
         return $this->belongsTo(Admin::class);
     }
-    public function video()
+    public function videos()
     {
-        return $this->hasMany(VideoInfo::class);
+        return $this->hasMany(VideoInfo::class ,'course_id'); 
     }
 
 

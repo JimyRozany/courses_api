@@ -23,8 +23,8 @@ class VideoInfo extends Model
 
     /*  ================================= */
 
-    public function couser()
+    public function course()
     {
-        return $this->belongsTo(CourseInfo::class);
+        return $this->belongsTo(CourseInfo::class ,'course_id');
     }
 }
