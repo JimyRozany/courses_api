@@ -33,6 +33,10 @@ class CourseInfo extends Model
     {
         return $this->hasMany(VideoInfo::class ,'course_id'); 
     }
+    public function favorites()
+    {
+        return $this->belongsTo(Favorites::class ,'course_id'); 
+    }
 
 
 }

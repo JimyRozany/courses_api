@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Course\CourseController;
-use App\Models\Admin;
+use App\Http\Controllers\Api\Favorites\FavoritesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::middleware('checkApiPassword')->group(function(){
     
     /* ============ Course Routes ============== */
     Route::middleware('checkAuthAndToken:admin-api')->group(function(){
+
         Route::post('create' ,[CourseController::class ,'createCourse']); // create new course
         Route::post('edit-course' ,[CourseController::class ,'editCourse']); // edit course info
         Route::post('remove-course' ,[CourseController::class ,'removeCourse']); // remove course
@@ -64,10 +66,17 @@ Route::middleware('checkApiPassword')->group(function(){
 
     /* ------------- Auth Routes --------------- */
     Route::middleware('checkToken')->group(function(){
+
         Route::post('all-courses' ,[CourseController::class ,'allCourses']); // get all courses
         Route::post('show' ,[CourseController::class ,'showCourse']); // get one course
         Route::post('show-all-videos' ,[CourseController::class ,'allVideos']); // get all videos in course
         Route::post('show-video' ,[CourseController::class ,'showVideo']); // get one video in course
+    
+        /* ------------- Favorites Routes --------------- */
+        Route::post('favorites' ,[FavoritesController::class ,'allCourses']); // get all courses in favorites
+        Route::post('add-favorite' ,[FavoritesController::class ,'add']); // add course to favorites
+        Route::post('remove-favorite' ,[FavoritesController::class ,'remove']); // remove course from favorites
+
 
     });
 
